@@ -11,24 +11,56 @@
 // Step 5: Once everything is working, Actually Push It Up To Github This Time :)))))))
 
 const myElement = document.getElementById('changedElement')
+const pointsText = document.getElementById('points')
 
 let color = "rgb(0, 128, 0)"
 
-function changeColor(e) {
+let pointNum = 0
+
+function addPoint() {
+    pointNum += 8
+    pointsText.innerText = pointNum
+}
+
+
+
+// function changeColor(e) {
+//     if (e.code === "Space" && color == "rgb(0, 128, 0)") {
+//         color = "rgb(255, 0, 0)"
+//         myElement.style.backgroundColor = color
+//         console.log("Color is now red")
+//     }
+//     else if (e.code === "Space" && color == "rgb(255, 0, 0)") {
+//         color = "rgb(0, 128, 0)"
+//         myElement.style.backgroundColor = color
+//         console.log("Color is now green");
+//     }
+// }
+
+document.addEventListener('keyup', (e)=> {
+    idleSpace(e)
+}); // space buttons works
+
+document.addEventListener('keydown', (e)=> {
+    heldSpace(e)
+}); // space buttons works
+
+
+function heldSpace(e) {
     if (e.code === "Space" && color == "rgb(0, 128, 0)") {
         color = "rgb(255, 0, 0)"
         myElement.style.backgroundColor = color
         console.log("Color is now red")
-    }
-    else if (e.code === "Space" && color == "rgb(255, 0, 0)") {
-        color = "rgb(0, 128, 0)"
-        myElement.style.backgroundColor = color
-        console.log("Color is now green");
+        pointInterval = setInterval(addPoint, 0);
     }
 }
 
-document.addEventListener('keyup', (e)=> {
-    changeColor(e)
-}); // space buttons works
-
+function idleSpace(e) {
+    if (e.code === "Space" && color == "rgb(255, 0, 0)") {
+        color = "rgb(0, 128, 0)"
+        myElement.style.backgroundColor = color
+        console.log("Color is now green");
+        clearInterval(pointInterval)
+    }
+}
 

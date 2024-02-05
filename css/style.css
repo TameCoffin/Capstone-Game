@@ -16,3 +16,8 @@ body {
     margin-top: 20px;
     text-align: center;
 }
+
+.points {
+    text-align: center;
+    font-size: 100px;
+}
