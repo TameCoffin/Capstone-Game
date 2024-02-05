@@ -1,0 +1,18 @@
+body {
+    background-color: rgb(233, 233, 233);
+}
+
+.changed-element {
+    height: 250px;
+    width: 250px;
+    background-color: rgb(0, 128, 0);
+    border: 3px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 55px;
+}
+
+.tutorial {
+    margin-top: 20px;
+    text-align: center;
+}
