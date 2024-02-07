@@ -34,14 +34,60 @@ const lightAlert = document.getElementById('lightAlert')
 let color = "rgb(158, 121, 121)"
 let pointNum = 0
 let gameStatus = false
-let redMin = 3;
+let redMin = 3.00;
 let redMax = 7;
-let greenMin = 2;
-let greenMax = 6;
+let greenMin = 2.00;
+let greenMax = 6.00;
 let pointInterval = 0
+let redReduction = 0.25
+let greenReduction = 0.45
+
+// function mathTest() {
+//     let mathD = Math.round(redMax * 100) / 100
+//     mathD = mathD - 2.5
+//     console.log(mathD);
+// }
+// mathTest()
+
+// function timeReducerTest() {
+//     let randomizeNumber = Math.random() * (4.50 - 3.50 + 1) + 3
+//     let randomNumber = Math.floor(randomizeNumber * 5) / 5
+//     randomNumber = randomNumber - redReduction
+//     if (randomNumber <= 1.00) {
+//         redReduction = 0
+//         console.log("Math floor hit");
+//     }
+//     console.log(randomNumber);
+//     setTimeout(timeReducerTest, randomNumber * 500)
+// }
+
+// function timeReducerTestAgain() {
+//     let randomNumber = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
+//     setInterval(() => {
+//         let subtractedNumber = 0.25
+//         if (randomNumber <= 1) {
+//             subtractedNumber = 0
+//         }
+//         randomNumber -= subtractedNumber
+//         console.log(randomNumber);
+//         timeReducerTestAgain
+//     }, 500);
+// }
+
+// timeReducerTest();
+
 
 function timeRandomizerRed() {
     let randomNumber = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
+    if (randomNumber <= 1.00) {
+        redReduction = 0
+        console.log("Red Floor Reached");
+    }
+    randomNumber -= redReduction
+    if (randomNumber -= redReduction) {
+        console.log(randomNumber -= redReduction);
+        console.log("Subtraction successful");
+    }
     console.log(randomNumber);
     console.log("Red Turn");
         color = "rgb(210, 51, 51)"
@@ -52,8 +98,19 @@ function timeRandomizerRed() {
     setTimeout(timeRandomizerGreen, randomNumber * 1000)
 }
 
+timeRandomizerRed()
+
+
 function timeRandomizerGreen() {
     let randomNumber = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
+    if (randomNumber <= 0.50) {
+        greenReduction = 0
+        console.log("Green Floor Reached");
+    }
+    randomNumber -= greenReduction
+    if (randomNumber -= greenReduction) {
+        console.log("Subtraction successful");
+    }
     console.log(randomNumber);
     console.log("Green Turn");
     color = "rgb(38, 222, 96)"
