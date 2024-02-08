@@ -1,3 +1,5 @@
+// dhon gave the idea of deducting points based on if you are still holding the space bar between the margin for error
+
 const light = document.getElementById("light")
 const pointsText = document.getElementById('points')
 const countdown = document.getElementById('countdown')
@@ -5,6 +7,7 @@ const overlay = document.getElementById('overlay')
 const testButton = document.getElementById('testButton')
 const lightAlert = document.getElementById('lightAlert')
 const errorTimeTest = document.getElementById('errorTimeTest')
+const gameOverState = document.getElementById('gameOver')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
@@ -20,16 +23,19 @@ let roomForError = 1.5
 let errorTimer = 150
 let errorSubtract = 10
 let keyState = {};
+let isGameOver = false
 
 testButton.addEventListener('click', ()=> {
     startingTimer()
 })
 
-document.addEventListener('keydown',(e) => {
-    keyState[e.code] = true;
-},true);
+window.addEventListener('keydown',keyDown,true);
 
-document.addEventListener('keyup',(e) => {
+function keyDown(e) {
+    keyState[e.code] = true;
+}
+
+window.addEventListener('keyup',(e) => {
     keyState[e.code] = false;
 },true);
 
@@ -42,9 +48,14 @@ function keyStateCheck() {
 }
 
 function gameOver() {
-        console.log("Game Over");
-        resizeTo()
+    isGameOver = true
+    console.log("Game Over");
+    color == "rgb(158, 121, 121)"
+    gameOverState.style.visibility = "visible"
+    window.removeEventListener('keydown',keyDown(e),false)
 }
+
+
 
 function gameLoop() {
     keyStateCheck()
@@ -74,13 +85,13 @@ function errorTime() {
 
 
 function timeRandomizerRed() {
-    errorTimer = 150
+    errorTimer = 100
     errorTime()
     increaseSubtract()
     reduceError()
     errorTimer -= errorSubtract
-    if (errorTimer <= 50){
-        errorTimer = 50
+    if (errorTimer <= 20){
+        errorTimer = 20
     }
     redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
     redStart -= subtraction
@@ -122,7 +133,11 @@ function timeRandomizerGreen() {
 // rgb(210, 51, 51) is red
 
 function addPoint() {
-    pointNum += 8
+    if (gameStatus = true) {
+        pointNum += 8
+    } else {
+        pointNum += 0
+    }
     pointsText.innerText = pointNum
 }
 
@@ -155,6 +170,7 @@ function gameStart() {
         console.log("Game Is Active");
     }
 }
+
 
 /*
 
