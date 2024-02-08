@@ -30,121 +30,121 @@ const countdown = document.getElementById('countdown')
 const overlay = document.getElementById('overlay')
 const testButton = document.getElementById('testButton')
 const lightAlert = document.getElementById('lightAlert')
+const errorTimeTest = document.getElementById('errorTimeTest')
 
-let color = "rgb(158, 121, 121)"
+let color = "rgb(210, 51, 51)"
 let pointNum = 0
 let gameStatus = false
-let redMin = 3.00;
+let redStart = 7;
+let redMin = 3;
 let redMax = 7;
-let greenMin = 2.00;
-let greenMax = 6.00;
-let pointInterval = 0
-let redReduction = 0.25
-let greenReduction = 0.45
+let greenStart = 6;
+let greenMin = 2;
+let greenMax = 6;
+let subtraction = 0.2
+let roomForError = 1.5
+let errorTimer = 150
+let errorSubtract = 10
+let keyState = {};
 
-// function mathTest() {
-//     let mathD = Math.round(redMax * 100) / 100
-//     mathD = mathD - 2.5
-//     console.log(mathD);
-// }
-// mathTest()
+testButton.addEventListener('click', ()=> {
+    startingTimer()
+})
 
-// function timeReducerTest() {
-//     let randomizeNumber = Math.random() * (4.50 - 3.50 + 1) + 3
-//     let randomNumber = Math.floor(randomizeNumber * 5) / 5
-//     randomNumber = randomNumber - redReduction
-//     if (randomNumber <= 1.00) {
-//         redReduction = 0
-//         console.log("Math floor hit");
-//     }
-//     console.log(randomNumber);
-//     setTimeout(timeReducerTest, randomNumber * 500)
-// }
+document.addEventListener('keydown',(e) => {
+    keyState[e.code] = true;
+},true);
 
-// function timeReducerTestAgain() {
-//     let randomNumber = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
-//     setInterval(() => {
-//         let subtractedNumber = 0.25
-//         if (randomNumber <= 1) {
-//             subtractedNumber = 0
-//         }
-//         randomNumber -= subtractedNumber
-//         console.log(randomNumber);
-//         timeReducerTestAgain
-//     }, 500);
-// }
+document.addEventListener('keyup',(e) => {
+    keyState[e.code] = false;
+},true);
 
-// timeReducerTest();
+function keyStateCheck() {
+    if (keyState["Space"] && color == "rgb(38, 222, 96)"){
+        addPoint()
+    } if (keyState["Space"] && color == "rgb(210, 51, 51)" && errorTimer <= 0) {
+        gameOver()
+    }
+}
+
+function gameOver() {
+        console.log("Game Over");
+}
+
+function gameLoop() {
+    keyStateCheck()
+    setTimeout(gameLoop, 10);
+}
+
+gameLoop();
+
+
+function increaseSubtract() {
+    subtraction += 0.2
+}
+
+function reduceError() {
+    errorSubtract += 10
+}
+
+function errorTime() {
+    errorInterval = setInterval(() => {
+        if(errorTimer <= 0){
+        clearInterval(errorInterval);
+        }
+        errorTimeTest.innerText = errorTimer;
+        errorTimer -= 1;
+    }, 15);
+}
 
 
 function timeRandomizerRed() {
-    let randomNumber = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
-    if (randomNumber <= 1.00) {
-        redReduction = 0
-        console.log("Red Floor Reached");
+    errorTimer = 150
+    errorTime()
+    increaseSubtract()
+    reduceError()
+    errorTimer -= errorSubtract
+    if (errorTimer <= 50){
+        errorTimer = 50
     }
-    randomNumber -= redReduction
-    if (randomNumber -= redReduction) {
-        console.log(randomNumber -= redReduction);
-        console.log("Subtraction successful");
+    redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
+    redStart -= subtraction
+    if (redStart <= 2) {
+        redStart = 2
+        subtraction = 3
+        console.log("Floor Reached");
     }
-    console.log(randomNumber);
+    console.log(redStart);
     console.log("Red Turn");
-        color = "rgb(210, 51, 51)"
-        light.style.backgroundColor = color
-        lightAlert.style.color = "rgb(210, 51, 51)"
-        lightAlert.innerText = "Red Light!"
-        clearInterval(pointInterval)
-    setTimeout(timeRandomizerGreen, randomNumber * 1000)
+    color = "rgb(210, 51, 51)"
+    light.style.backgroundColor = color
+    lightAlert.style.color = "rgb(210, 51, 51)"
+    lightAlert.innerText = "Red Light!"
+    setTimeout(timeRandomizerGreen, redStart * 1000)
+    return redStart
 }
-
-timeRandomizerRed()
-
 
 function timeRandomizerGreen() {
-    let randomNumber = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
-    if (randomNumber <= 0.50) {
-        greenReduction = 0
-        console.log("Green Floor Reached");
+    increaseSubtract()
+    greenStart = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
+    greenStart -= subtraction
+    if (greenStart <= 1) {
+        greenStart = 1
+        subtraction = 2
+        console.log("Floor Reached");
     }
-    randomNumber -= greenReduction
-    if (randomNumber -= greenReduction) {
-        console.log("Subtraction successful");
-    }
-    console.log(randomNumber);
+    console.log(greenStart);
     console.log("Green Turn");
     color = "rgb(38, 222, 96)"
-        light.style.backgroundColor = color
-        lightAlert.style.color = "rgb(12, 85, 24)"
-        lightAlert.innerText = "Green Light!"
-        pointInterval = setInterval(addPoint, 0);
-    setTimeout(timeRandomizerRed, randomNumber * 1000)
+    light.style.backgroundColor = color
+    lightAlert.style.color = "rgb(12, 85, 24)"
+    lightAlert.innerText = "Green Light!"
+    setTimeout(timeRandomizerRed, greenStart * 1000)
+    return greenStart
 }
-
-// setTimeout(function that changes). so we need to change those to the "xLight" functions and also figure out how to disable each when one is active.
 
 // rgb(38, 222, 96) is green
 // rgb(210, 51, 51) is red
-
-// function greenLight() {
-//         color = "rgb(210, 51, 51)"
-//         light.style.backgroundColor = color
-//         lightAlert.style.color = "rgb(12, 85, 24)"
-//         lightAlert.innerText = "Green Light!"
-//         console.log("Color is now green")
-//         // pointInterval = setInterval(addPoint, 0);
-//     }
-
-// function redLight() {
-//         timeRandomizerRed()
-//         console.log(redLight);
-//         color = "rgb(38, 222, 96)"
-//         light.style.backgroundColor = color
-//         lightAlert.style.color = color
-//         lightAlert.innerText = "Red Light!"
-//         console.log("Color is now red");
-//         // clearInterval(pointInterval)
-//     }
 
 function addPoint() {
     pointNum += 8
@@ -181,40 +181,10 @@ function gameStart() {
     }
 }
 
-// right now i need to get the starting timer to work
+/*
 
-testButton.addEventListener('click', ()=> {
-    startingTimer()
-});
+    Sources:
 
-// document.addEventListener('keyup', (e)=> {
-//     idleSpace(e)
-// }); // space buttons works
-
-// document.addEventListener('keydown', (e)=> {
-//     heldSpace(e)
-// }); // space buttons works
-
-
-// function heldSpace(e) {
-//     if (e.code === "Space" && color == "rgb(210, 51, 51)") {
-//         color = "rgb(38, 222, 96)"
-//         light.style.backgroundColor = color
-//         lightAlert.style.color = "rgb(12, 85, 24)"
-//         lightAlert.innerText = "Green Light!"
-//         console.log("Color is now green")
-//         pointInterval = setInterval(addPoint, 0);
-//     }
-// }
-
-// function idleSpace(e) {
-//     if (e.code === "Space" && color == "rgb(38, 222, 96)") {
-//         color = "rgb(210, 51, 51)"
-//         light.style.backgroundColor = color
-//         lightAlert.style.color = color
-//         lightAlert.innerText = "Red Light!"
-//         console.log("Color is now red");
-//         clearInterval(pointInterval)
-//     }
-// }
-
+    "Game Loop" function was taken from "nnnnn" 
+    link: https://jsfiddle.net/nnnnnn/gedk6/
+*/ 

@@ -49,6 +49,12 @@ body {
     font-size: 30px;
 }
 
+#errorTimeTest {
+    font-size: 150px;
+    position: fixed;
+    right: 500px;
+}
+
 
 .tutorial {
     margin-top: 20px;

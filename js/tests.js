@@ -1,149 +1,165 @@
-// document.addEventListener('keyup', (event) => {
-//     if (event.code === 'Space') {
-//         console.log('Space pressed')
-//     }
-// })
+const light = document.getElementById("light")
+const pointsText = document.getElementById('points')
+const countdown = document.getElementById('countdown')
+const overlay = document.getElementById('overlay')
+const testButton = document.getElementById('testButton')
+const lightAlert = document.getElementById('lightAlert')
+const errorTimeTest = document.getElementById('errorTimeTest')
 
-// (e) is the event. ('keyup' = checking if a key is pressed, (event) = what will be affected)
-// the if statement is asking: (if the key pressed is space: do stuff)
-// event = basically just activating the check
-// code = simply just the id of the key being pressed
-// 'space' = the assigned key
+let color = "rgb(210, 51, 51)"
+let pointNum = 0
+let gameStatus = false
+let redStart = 7;
+let redMin = 3;
+let redMax = 7;
+let greenStart = 6;
+let greenMin = 2;
+let greenMax = 6;
+let subtraction = 0.2
+let roomForError = 1.5
+let errorTimer = 150
+let errorSubtract = 10
+let keyState = {};
 
-// we need to find a way to change the output of pressing space based on the event it's used for. Right now, all it can do is just display "space pressed" in the console. If we create a const that is "console.log('space pressed') and put it in the same place, it should still display in the console. So i can create variables and then just update what goes in the event listner output."
+testButton.addEventListener('click', ()=> {
+    startingTimer()
+})
 
-// const actions = ["action1", "action2", "action3"]
+document.addEventListener('keydown',(e) => {
+    keyState[e.code] = true;
+},true);
 
-// function spaceBar() {
-//     document.addEventListener('keyup', (event) => {
-//         if (event.code === 'Space') {
-//             console.log('Space pressed')
-//         }
-//     })
-// }
+document.addEventListener('keyup',(e) => {
+    keyState[e.code] = false;
+},true);
 
-let subtraction = 0.25
+function keyStateCheck() {
+    if (keyState["Space"] && color == "rgb(38, 222, 96)"){
+        addPoint()
+    } if (keyState["Space"] && color == "rgb(210, 51, 51)" && errorTimer <= 0) {
+        gameOver()
+    }
+}
 
-let min = 3
-let max = 6
-let firstNo = 4
-// i think if we create a number reducer outside of the function then the random numbers will both be reduced in the same way
+function gameOver() {
+        console.log("Game Over");
+        resizeTo()
+}
 
-// function timer() {
-//     function numberRando() {
-//         firstNo = Math.floor(Math.random() * (max - min + 1) + min)
-//         console.log(firstNo + " First run");
-//     }
-//     numberRando()
-//     firstNo -= subtraction
-//     console.log(firstNo + " Second run");
-//     // do two functions then have them perform at the same time
-//     setTimeout(timer, firstNo * 1000)
-// }
+function gameLoop() {
+    keyStateCheck()
+    setTimeout(gameLoop, 10);
+}
 
-// maybe make a function that continually adds 0.25 to subtraction then subract the value in the function
+gameLoop();
 
-
-// function subractor() {
-//     firstNo -= subtraction
-//     console.log(firstNo);
-//     numberRando()
-// }
 
 function increaseSubtract() {
-    subtraction += 0.25
+    subtraction += 0.2
 }
 
-function numberRando() {
+function reduceError() {
+    errorSubtract += 10
+}
+
+function errorTime() {
+    errorInterval = setInterval(() => {
+        if(errorTimer <= 0){
+        clearInterval(errorInterval);
+        }
+        errorTimeTest.innerText = errorTimer;
+        errorTimer -= 1;
+    }, 15);
+}
+
+
+function timeRandomizerRed() {
+    errorTimer = 150
+    errorTime()
     increaseSubtract()
-    firstNo = Math.floor(Math.random() * (max - min + 1) + min)// 3.75
-    firstNo -= subtraction //3.5
-    console.log(firstNo);
-    if (firstNo <= 1) {
-        subtraction = 0
+    reduceError()
+    errorTimer -= errorSubtract
+    if (errorTimer <= 50){
+        errorTimer = 50
+    }
+    redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
+    redStart -= subtraction
+    if (redStart <= 2) {
+        redStart = 2
+        subtraction = 3
         console.log("Floor Reached");
     }
-    setTimeout(numberRando, firstNo * 1000)
-    return firstNo
+    console.log(redStart);
+    console.log("Red Turn");
+    color = "rgb(210, 51, 51)"
+    light.style.backgroundColor = color
+    lightAlert.style.color = "rgb(210, 51, 51)"
+    lightAlert.innerText = "Red Light!"
+    setTimeout(timeRandomizerGreen, redStart * 1000)
+    return redStart
 }
 
-numberRando()
+function timeRandomizerGreen() {
+    increaseSubtract()
+    greenStart = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
+    greenStart -= subtraction
+    if (greenStart <= 1) {
+        greenStart = 1
+        subtraction = 2
+        console.log("Floor Reached");
+    }
+    console.log(greenStart);
+    console.log("Green Turn");
+    color = "rgb(38, 222, 96)"
+    light.style.backgroundColor = color
+    lightAlert.style.color = "rgb(12, 85, 24)"
+    lightAlert.innerText = "Green Light!"
+    setTimeout(timeRandomizerRed, greenStart * 1000)
+    return greenStart
+}
 
-// 
+// rgb(38, 222, 96) is green
+// rgb(210, 51, 51) is red
 
-// function numberRando() {
-//     setInterval(() => {
-//         firstNo = Math.floor(Math.random() * (max - min + 1) + min)
-//         firstNo -= subtraction
-//         console.log(firstNo);
-        
-        
-//     }, firstNo * 1000);
-//     numberRando()
-//     clearInterval(numberRando)
-// }
+function addPoint() {
+    pointNum += 8
+    pointsText.innerText = pointNum
+}
 
+function startingTimer() {
+    testButton.style.visibility = "hidden"
+    let startTime = 3
+    countdown.style.display = "block"
+    overlay.style.display = "block"
+    setInterval(() => {
+        startTime--
+        countdown.innerText = startTime;
+        if (startTime == 0) {
+            countdown.style.display = "none"
+            overlay.style.display = "none"
+            gameStatus = true
+            gameStart()
+            clearInterval(startingTimer)
+        }
+    }, 1000);
+}
 
+function gameStart() {
+    if (gameStatus = true) {
+        color = "rgb(210, 51, 51)"
+        timeRandomizerRed()
+        light.style.backgroundColor = color
+        lightAlert.style.visibility = "visible"
+        lightAlert.style.color = "rgb(210, 51, 51)"
+        lightAlert.innerText = "Red Light!"
+        console.log("Game Is Active");
+    }
+}
 
-// function numberRandomizer() {
-//     function subractor() {
-//         firstNo -= subtraction
-//     }
-//     subractor()
-//     numberRando()
-//     function numberRando() {
-//         firstNo = Math.floor(Math.random() * (max - min + 1) + min)
-//         console.log(firstNo);
-//         setTimeout(numberRandomizer, firstNo * 1000)
-//     }
-// }
+/*
 
-// numberRandomizer()
-// function subtract() {
-//     firstNo -= subtraction
-//     console.log(firstNo + " should end in 75");
-//     setTimeout(numberRando, firstNo * 1000)
-// }
+    Sources:
 
-// numberRando()
-/*  
-
-The current situation:
-
-    - The inital value of the "firstNo" is 4
-
-    - This number is run through a randomizer (numberRando, line 44) that will change "firstNo" into a number between 1 - 4. This is working correctly (line 45)
-
-    - The number then gets moved into a setTimeout at the bottom of numberRando. The timeout will be multipled by 1000 and whatever number numberRando logged (essentially just adding the value by 1 second).
-
-    - Once the timeout has run, the next function, "subtract", will be called.
-
-    - Subtract will decrease whatever number was previously generated by the init "subtraction" which is the number 0.25. The result is then logged and it should be the original number subracted by 0.25. This also currently works.
-
-    - Finally, the same setTimeout method is used, only this time calling numberRando, creating an endless loop between both functions. But this is where my issue starts.
-
-What I'm trying to do:
-
-    - I want have the firstNo subtracted value stay each loop of both functions.
-
-    so it would go like this: 
-
-        (lets say the first random number is 3 and the next random number is 4 and last is 2)
-
-        firstNo -> random number(3)
-        random number(3) - 0.25 = 2.75
-
-        then next cycle, a new random number is generated:
-
-        random number is 4 and carries the subracted amount (0.25)
-        random number(3.75) - 0.25 = 3.50
-
-        next cycle:
-
-        random number is 2 - the continued subractions
-        random number(1.50) - 0.25 = 1.25
-
-        etc
-*/
-
-
+    "Game Loop" function was taken from "nnnnn" 
+    link: https://jsfiddle.net/nnnnnn/gedk6/
+*/ 
