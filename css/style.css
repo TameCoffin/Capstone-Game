@@ -72,8 +72,15 @@ body {
     display: none;
 }
 
+
+#highScore {
+    margin: auto;
+}
+
 #restartButton {
-    display: none;
+    visibility: hidden;
+    margin: auto;
+    padding: 30px;
 }
 
 .game-over {

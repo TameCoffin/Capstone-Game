@@ -1,6 +1,3 @@
-// dhon gave the idea of deducting points based on if you are still holding the space bar between the margin for error
-
-
 
 const light = document.getElementById("light")
 const pointsText = document.getElementById('points')
@@ -11,9 +8,12 @@ const lightAlert = document.getElementById('lightAlert')
 const errorTimeTest = document.getElementById('errorTimeTest')
 const gameOverState = document.getElementById('gameOver')
 const restart = document.getElementById('restartButton')
+const highScore = document.getElementById('highScore')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
+let finalScore = 0
+let highscore = 0
 let gameStatus = false
 let redStart = 7;
 let redMin = 3;
@@ -26,10 +26,14 @@ let roomForError = 1.5
 let errorTimer = 150
 let errorSubtract = 10
 let keyState = {};
-let isGameOver = false
+let startTime = 3
 
 testButton.addEventListener('click', ()=> {
     startingTimer()
+})
+
+restart.addEventListener('click', ()=> {
+    restartGame()
 })
 
 function gameStatusCheck() {
@@ -55,21 +59,26 @@ window.addEventListener('keyup',(e) => {
 function keyStateCheck() {
     if (keyState["Space"] && color == "rgb(38, 222, 96)"){
         addPoint()
-    } if (keyState["Space"] && color == "rgb(210, 51, 51)" && errorTimer <= 0) {
+    } else if (keyState["Space"] && color == "rgb(210, 51, 51)" && errorTimer >= 1) {
+        pointNum--
+        pointsText.innerText = pointNum
+        pointsText.style.color = "rgb(210, 51, 51)"
+    } else if (keyState["Space"] && color == "rgb(210, 51, 51)" && errorTimer <= 0) {
         gameOver()
-    }
+    } else {pointsText.style.color = "rgb(0, 0, 0)"}
 }
 
 function gameOver() {
     gameStatus = false
     console.log("Game Over");
     gameOverState.style.visibility = "visible"
-    // window.removeEventListener('keydown',keyDown(),false)
+    restart.style.visibility = "visible"
     color = "rgb(158, 121, 121)"
     light.style.backgroundColor = color
+    finalScore = pointNum
+    newHighscore()
+    console.log("finalscore is " + finalScore);
 }
-
-
 
 function gameLoop() {
     keyStateCheck()
@@ -163,18 +172,20 @@ function timeRandomizerGreen() {
 function addPoint() {
     if (gameStatus === true) {
         pointNum += 8
-    } else {
-        pointNum += 0
+        pointsText.innerText = pointNum
+        // if (keyState["Space"] && color == "rgb(210, 51, 51)"){
+        //     pointNum -= 8
+        // }
     }
-    pointsText.innerText = pointNum
 }
 
 function startingTimer() {
+    gameOverState.style.visibility = "hidden"
     testButton.style.visibility = "hidden"
-    let startTime = 3
+    restart.style.visibility = "hidden"
     countdown.style.display = "block"
     overlay.style.display = "block"
-    setInterval(() => {
+    startInverval = setInterval(() => {
         startTime--
         countdown.innerText = startTime;
         if (startTime == 0) {
@@ -182,7 +193,7 @@ function startingTimer() {
             overlay.style.display = "none"
             gameStatus = true
             gameStart()
-            clearInterval(startingTimer)
+            clearInterval(startInverval)
         }
     }, 1000);
 }
@@ -194,3 +205,34 @@ function gameStart() {
     }
 }
 
+function restartGame() {
+    color = "rgb(210, 51, 51)"
+    pointNum = 0
+    pointsText.innerText = pointNum
+    gameStatus = false
+    redStart = 7;
+    redMin = 3;
+    redMax = 7;
+    greenStart = 6;
+    greenMin = 2;
+    greenMax = 6;
+    subtraction = 0.2
+    roomForError = 1.5
+    errorTimer = 150
+    errorSubtract = 10
+    keyState = {};
+    countdown.innerText = 3
+    startTime = 3
+    startingTimer()
+}
+
+function newHighscore() {
+    if (finalScore >= highscore) {
+        highscore = finalScore
+        highScore.innerText = " " + highscore
+        console.log(highscore);
+        console.log("high score added");
+    }
+}
+
+// highscore function will be something like "If finalscore is greater than highscore, highscore = finalscore"
