@@ -31,6 +31,8 @@ const overlay = document.getElementById('overlay')
 const testButton = document.getElementById('testButton')
 const lightAlert = document.getElementById('lightAlert')
 const errorTimeTest = document.getElementById('errorTimeTest')
+const gameOverState = document.getElementById('gameOver')
+const restart = document.getElementById('restartButton')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
@@ -46,16 +48,19 @@ let roomForError = 1.5
 let errorTimer = 150
 let errorSubtract = 10
 let keyState = {};
+let isGameOver = false
 
 testButton.addEventListener('click', ()=> {
     startingTimer()
 })
 
-document.addEventListener('keydown',(e) => {
-    keyState[e.code] = true;
-},true);
+window.addEventListener('keydown',keyDown,true);
 
-document.addEventListener('keyup',(e) => {
+function keyDown(e) {
+    keyState[e.code] = true;
+}
+
+window.addEventListener('keyup',(e) => {
     keyState[e.code] = false;
 },true);
 
@@ -68,8 +73,13 @@ function keyStateCheck() {
 }
 
 function gameOver() {
-        console.log("Game Over");
+    console.log("Game Over");
+    gameOverState.style.visibility = "visible"
+    window.removeEventListener('keydown',keyDown(),false)
+    color == "rgb(158, 121, 121)"
 }
+
+
 
 function gameLoop() {
     keyStateCheck()
@@ -99,13 +109,13 @@ function errorTime() {
 
 
 function timeRandomizerRed() {
-    errorTimer = 150
+    errorTimer = 100
     errorTime()
     increaseSubtract()
     reduceError()
     errorTimer -= errorSubtract
-    if (errorTimer <= 50){
-        errorTimer = 50
+    if (errorTimer <= 20){
+        errorTimer = 20
     }
     redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
     redStart -= subtraction
@@ -143,11 +153,19 @@ function timeRandomizerGreen() {
     return greenStart
 }
 
+// function redStop() {
+    
+// }
+
 // rgb(38, 222, 96) is green
 // rgb(210, 51, 51) is red
 
 function addPoint() {
-    pointNum += 8
+    if (gameStatus === true) {
+        pointNum += 8
+    } else {
+        pointNum += 0
+    }
     pointsText.innerText = pointNum
 }
 
@@ -170,7 +188,7 @@ function startingTimer() {
 }
 
 function gameStart() {
-    if (gameStatus = true) {
+    if (gameStatus === true) {
         color = "rgb(210, 51, 51)"
         timeRandomizerRed()
         light.style.backgroundColor = color
@@ -181,10 +199,14 @@ function gameStart() {
     }
 }
 
+
 /*
 
     Sources:
 
     "Game Loop" function was taken from "nnnnn" 
     link: https://jsfiddle.net/nnnnnn/gedk6/
+
+    "Random Number Generator" function was based on code from "danday74" and "Francisc"
+    https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 */ 

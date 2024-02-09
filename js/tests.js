@@ -1,5 +1,7 @@
 // dhon gave the idea of deducting points based on if you are still holding the space bar between the margin for error
 
+
+
 const light = document.getElementById("light")
 const pointsText = document.getElementById('points')
 const countdown = document.getElementById('countdown')
@@ -8,6 +10,7 @@ const testButton = document.getElementById('testButton')
 const lightAlert = document.getElementById('lightAlert')
 const errorTimeTest = document.getElementById('errorTimeTest')
 const gameOverState = document.getElementById('gameOver')
+const restart = document.getElementById('restartButton')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
@@ -29,6 +32,16 @@ testButton.addEventListener('click', ()=> {
     startingTimer()
 })
 
+function gameStatusCheck() {
+    if (gameStatus === false) {
+        console.log("Game staus is false");
+    } else if (gameStatus === true) {
+        console.log("Game status is true");
+    }
+}
+
+gameStatusCheck()
+
 window.addEventListener('keydown',keyDown,true);
 
 function keyDown(e) {
@@ -48,11 +61,12 @@ function keyStateCheck() {
 }
 
 function gameOver() {
-    isGameOver = true
+    gameStatus = false
     console.log("Game Over");
-    color == "rgb(158, 121, 121)"
     gameOverState.style.visibility = "visible"
-    window.removeEventListener('keydown',keyDown(e),false)
+    // window.removeEventListener('keydown',keyDown(),false)
+    color = "rgb(158, 121, 121)"
+    light.style.backgroundColor = color
 }
 
 
@@ -85,55 +99,69 @@ function errorTime() {
 
 
 function timeRandomizerRed() {
-    errorTimer = 100
-    errorTime()
-    increaseSubtract()
-    reduceError()
-    errorTimer -= errorSubtract
-    if (errorTimer <= 20){
-        errorTimer = 20
+    if (gameStatus === true) {
+        errorTimer = 100
+        errorTime()
+        increaseSubtract()
+        reduceError()
+        errorTimer -= errorSubtract
+        if (errorTimer <= 20){
+            errorTimer = 20
+        }
+        redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
+        redStart -= subtraction
+        if (redStart <= 2) {
+            redStart = 2
+            subtraction = 3
+            console.log("Floor Reached");
+        }
+        console.log(redStart);
+        console.log("Red Turn");
+        color = "rgb(210, 51, 51)"
+        light.style.backgroundColor = color
+        lightAlert.style.color = "rgb(210, 51, 51)"
+        lightAlert.innerText = "Red Light!"
+        setTimeout(timeRandomizerGreen, redStart * 1000)
+        return redStart
+    } else if (gameStatus === false){
+        color = "rgb(158, 121, 121)"
+        light.style.backgroundColor = color
     }
-    redStart = Math.floor(Math.random() * (redMax - redMin + 1) + redMin)
-    redStart -= subtraction
-    if (redStart <= 2) {
-        redStart = 2
-        subtraction = 3
-        console.log("Floor Reached");
-    }
-    console.log(redStart);
-    console.log("Red Turn");
-    color = "rgb(210, 51, 51)"
-    light.style.backgroundColor = color
-    lightAlert.style.color = "rgb(210, 51, 51)"
-    lightAlert.innerText = "Red Light!"
-    setTimeout(timeRandomizerGreen, redStart * 1000)
-    return redStart
 }
 
 function timeRandomizerGreen() {
-    increaseSubtract()
-    greenStart = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
-    greenStart -= subtraction
-    if (greenStart <= 1) {
-        greenStart = 1
-        subtraction = 2
-        console.log("Floor Reached");
+    if (gameStatus === true) {
+        increaseSubtract()
+        greenStart = Math.floor(Math.random() * (greenMax - greenMin + 1) + greenMin)
+        greenStart -= subtraction
+        if (greenStart <= 1) {
+            greenStart = 1
+            subtraction = 2
+            console.log("Floor Reached");
+        }
+        console.log(greenStart);
+        console.log("Green Turn");
+        color = "rgb(38, 222, 96)"
+        light.style.backgroundColor = color
+        lightAlert.style.color = "rgb(12, 85, 24)"
+        lightAlert.innerText = "Green Light!"
+        setTimeout(timeRandomizerRed, greenStart * 1000)
+        return greenStart
+    } else if (gameStatus === false){
+        color = "rgb(158, 121, 121)"
+        light.style.backgroundColor = color
     }
-    console.log(greenStart);
-    console.log("Green Turn");
-    color = "rgb(38, 222, 96)"
-    light.style.backgroundColor = color
-    lightAlert.style.color = "rgb(12, 85, 24)"
-    lightAlert.innerText = "Green Light!"
-    setTimeout(timeRandomizerRed, greenStart * 1000)
-    return greenStart
 }
+
+// function redStop() {
+    
+// }
 
 // rgb(38, 222, 96) is green
 // rgb(210, 51, 51) is red
 
 function addPoint() {
-    if (gameStatus = true) {
+    if (gameStatus === true) {
         pointNum += 8
     } else {
         pointNum += 0
@@ -160,22 +188,9 @@ function startingTimer() {
 }
 
 function gameStart() {
-    if (gameStatus = true) {
-        color = "rgb(210, 51, 51)"
+    if (gameStatus === true) {
         timeRandomizerRed()
-        light.style.backgroundColor = color
-        lightAlert.style.visibility = "visible"
-        lightAlert.style.color = "rgb(210, 51, 51)"
-        lightAlert.innerText = "Red Light!"
         console.log("Game Is Active");
     }
 }
 
-
-/*
-
-    Sources:
-
-    "Game Loop" function was taken from "nnnnn" 
-    link: https://jsfiddle.net/nnnnnn/gedk6/
-*/ 
