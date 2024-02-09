@@ -23,8 +23,9 @@ let greenMin = 2;
 let greenMax = 6;
 let subtraction = 0.2
 let roomForError = 1.5
-let errorTimer = 150
-let errorSubtract = 10
+let errorTimer = 100
+let newErrorTimer = 100
+let errorSubtract = 1
 let keyState = {};
 let startTime = 3
 
@@ -93,10 +94,23 @@ function increaseSubtract() {
 }
 
 function reduceError() {
-    errorSubtract += 10
+    errorSubtract += 1
 }
 
+function errorIncrement() {
+    console.log("errorIncrementRun");
+    newErrorTimer--
+    if (newErrorTimer <= 15){
+        newErrorTimer = 15
+    }
+    setTimeout(errorIncrement, 1000)
+}
+
+
+// create a function that will add the value of the error increment number and then add it to the starting value of errorTime
+
 function errorTime() {
+    errorTimer += newErrorTimer
     errorInterval = setInterval(() => {
         if(errorTimer <= 0){
         clearInterval(errorInterval);
@@ -106,14 +120,10 @@ function errorTime() {
     }, 15);
 }
 
-
 function timeRandomizerRed() {
     if (gameStatus === true) {
-        errorTimer = 100
         errorTime()
         increaseSubtract()
-        reduceError()
-        errorTimer -= errorSubtract
         if (errorTimer <= 20){
             errorTimer = 20
         }
@@ -162,9 +172,6 @@ function timeRandomizerGreen() {
     }
 }
 
-// function redStop() {
-    
-// }
 
 // rgb(38, 222, 96) is green
 // rgb(210, 51, 51) is red
@@ -173,9 +180,6 @@ function addPoint() {
     if (gameStatus === true) {
         pointNum += 8
         pointsText.innerText = pointNum
-        // if (keyState["Space"] && color == "rgb(210, 51, 51)"){
-        //     pointNum -= 8
-        // }
     }
 }
 
@@ -200,6 +204,7 @@ function startingTimer() {
 
 function gameStart() {
     if (gameStatus === true) {
+        errorIncrement()
         timeRandomizerRed()
         console.log("Game Is Active");
     }
