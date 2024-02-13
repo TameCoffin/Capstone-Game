@@ -1,14 +1,14 @@
 // I accidently forgot to push what I currently have for the RL/GL game, so I'm gonna work on the controls today and try to get the points working.
 
-// Step 1: Start by making the space button change an element on the page.
+// Step 1: Start by making the space button change an element on the page. DONE
 
-// Step 2: Make the element change based on if you hold the button down instead of just pressing it.
+// Step 2: Make the element change based on if you hold the button down instead of just pressing it. DONE
 
-// Step 3: Once the button is working, change the affected element to a display of numbers.
+// Step 3: Once the button is working, change the affected element to a display of numbers. DONE
 
-// Step 4: Figure out how to make a number continually increase. OH! Isn't there a "per-tick" thing? you can do the ++ to add one every tick.
+// Step 4: Figure out how to make a number continually increase. OH! Isn't there a "per-tick" thing? you can do the ++ to add one every tick. DONE
 
-// Step 5: Once everything is working, Actually Push It Up To Github This Time :)))))))
+// Step 5: Once everything is working, Actually Push It Up To Github This Time :))))))) DONE
 
 // extra idea: once we get the random timer all sorted out and working, maybe we can also make the time decreased and increased random too. So it could either go up or down 
 

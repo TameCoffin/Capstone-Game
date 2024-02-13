@@ -15,18 +15,23 @@
         <h1 class="countdown" id="countdown">3</h1>
     </header>
     <main class="main" id="main">
-        <button class="test-button" id="testButton">button test</button>
+        <button class="test-button" id="testButton">Click Here To Start!</button>
+        <button class="hide-rules" id="hideRules">Hide Rules</button>
+        <section class="tutorial" id="tutorial">
+            <p class="rule-title" id="ruleTitle">Rules:</p>
+            <p class="rule-one" id="ruleOne">- When the light turns <span style="font-weight: bold; color: rgb(12, 85, 24);">green</span>, hold down the spacebar.</p>
+            <p class="rule-two" id="ruleTwo">- When the light is <span style="font-weight: bold; color: rgb(210, 51, 51);">red</span>, release the spacebar.</p>
+        </section>
         <div class="light"id="light"></div>
         <h1 class="game-over" id="gameOver">Game Over!</h1>
         <button class="restart-button" id="restartButton">Retry</button>
         <!-- potentially add an option to turn text on or off for those that may have trouble seeing the colors. for now, just have the text at the bottom anyway. -->
-        <h3 class="light-alert" style="text-decoration: underline;" id="lightAlert">Light change alert here</h3>
+        <h3 class="light-alert" style="text-decoration: underline;" id="lightAlert">Ready?</h3>
         <div class="game-text">
             <div class="game-score">
                 <div class="error-time-test" id="errorTimeTest">1500</div>
                 <h1>Score: <span id="gameScoreTitle"></span><h1 class="points" id="points">0</h1></h1>
             </div>
-            <h2 class="high-score-message">...but on the bright side, you *literally* have the world record for this game! Congrats!</h2>
             <h2 class="high-score">High-Score:<span id="highScore"> 0</span></h2>
         </div>
     </main>

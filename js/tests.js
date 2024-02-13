@@ -9,6 +9,8 @@ const errorTimeTest = document.getElementById('errorTimeTest')
 const gameOverState = document.getElementById('gameOver')
 const restart = document.getElementById('restartButton')
 const highScore = document.getElementById('highScore')
+const hideRules = document.getElementById('hideRules')
+const tutorial = document.getElementById('tutorial')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
@@ -23,8 +25,8 @@ let greenMin = 2;
 let greenMax = 6;
 let subtraction = 0.2
 let roomForError = 1.5
-let errorTimer = 100
-let newErrorTimer = 100
+let errorTimer = 75
+let newErrorTimer = 75
 let errorSubtract = 1
 let keyState = {};
 let startTime = 3
@@ -36,6 +38,20 @@ testButton.addEventListener('click', ()=> {
 restart.addEventListener('click', ()=> {
     restartGame()
 })
+
+hideRules.addEventListener('click', ()=> {
+    hideRule()
+})
+
+function hideRule() {
+    if (tutorial.style.display === "none"){
+        tutorial.style.display = "block"
+        console.log("rules hidden");
+    } else {
+        tutorial.style.display = "none"
+        console.log("rules displayed");
+    }
+}   
 
 function gameStatusCheck() {
     if (gameStatus === false) {
@@ -106,8 +122,6 @@ function errorIncrement() {
     setTimeout(errorIncrement, 1000)
 }
 
-
-// create a function that will add the value of the error increment number and then add it to the starting value of errorTime
 
 function errorTime() {
     errorTimer += newErrorTimer
@@ -240,4 +254,8 @@ function newHighscore() {
     }
 }
 
-// highscore function will be something like "If finalscore is greater than highscore, highscore = finalscore"
+/*
+    2-13-24
+
+        So I seem to have all the basic stuff done and the game is about as functional as it needs to be. Today let's just add smaller elements like options and messages. EG, option to turn off the text that notifies of the light changing and a tutorial message before the game starts.
+*/
