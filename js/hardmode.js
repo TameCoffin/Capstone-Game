@@ -1,34 +1,116 @@
+// Add 100 points each time you listen to Simon. If you hold down space on red and simon didn't tell you to, your points go up, but slower than if it was green
+
 const testButton = document.getElementById('testButton')
+const checkStatus = document.getElementById('statusCheck')
 const light = document.getElementById("light")
+const simon = document.getElementById("lightAlert")
+const pointsText = document.getElementById('points')
+
+
+// rgb(38, 222, 96) is green
+// rgb(210, 51, 51) is red
 
 // Create a 50/50 decider. Right now I'll just make the light change to signify which one changed. Make sure to put into the console which one ran though.
 
 let lightColor = " "
-let red = 0
-let green = 0
+let simonSaid = false
+let says = 0
+let silent = 0
+let pointNum = 0
 
 
+
+
+// testButton.addEventListener('click', ()=> {
+//     simonDecider()
+// })
 
 testButton.addEventListener('click', ()=> {
-    lightDecider()
+    lightSwitch()
+    simonDecider()
 })
 
-function lightDecider() {
-    x = (Math.floor(Math.random() * 2) == 0);
-    if(x) {
+checkStatus.addEventListener('click', ()=> {
+    didSimonSay()
+})
+
+function lightSwitch() {
+    if (light.style.backgroundColor === "rgb(158, 121, 121)") {
         lightColor = "rgb(210, 51, 51)"
         light.style.backgroundColor = lightColor
-    	console.log("1");
-    } else {
+    } else if (light.style.backgroundColor === "rgb(210, 51, 51)") {
         lightColor = "rgb(38, 222, 96)"
         light.style.backgroundColor = lightColor
-        console.log("2");
+    } else {
+        lightColor = "rgb(210, 51, 51)"
+        light.style.backgroundColor = lightColor
     }
 }
 
 // Step 1 done
 
-// 
+function simonDecider() {
+    x = (Math.floor(Math.random() * 2) == 0);
+    if(x) {
+        simonSaid = "Simon says:"
+        simon.innerText = simonSaid
+    	console.log("Simon says");
+        simonSaid = true
+    } else {
+        simonSaid = "Light"
+        simon.innerText = simonSaid
+        console.log("Simon silent");
+        simonSaid = false
+    }
+}
+
+/* 
+    Step 2: 
+
+        Make a function that checks if Simon is active or not.
+*/
+
+/*
+    Step 2 done
+
+    Step 3:
+
+        Now make a function that will changed to a pass or fail if you meet the conditions of both the light and simon
+ */
+
+function didSimonSay() {
+    if (simonSaid === false && light.style.backgroundColor === "rgb(210, 51, 51)") {
+        console.log("Well Done! Light was red and simon didn't speak");
+        pointNum += 1000
+        pointsText.innerText = pointNum
+    } else if (simonSaid === true && light.style.backgroundColor === "rgb(210, 51, 51)") {
+        console.log("Game Lost: Light was red and simon spoke");
+    } else if (simonSaid === false && light.style.backgroundColor === "rgb(38, 222, 96)") {
+        console.log("Game Lost: Light was green and simon didn't speak");
+    } else if (simonSaid === true && light.style.backgroundColor === "rgb(38, 222, 96)") {
+        console.log("Well Done! Light was green and simon spoke");
+        pointNum += 1000
+        pointsText.innerText = pointNum
+    }
+}
+
+/* 
+    Step 3 done
+
+    Step 4: 
+
+        Apply the add 1000 points to the didSimonSay function
+
+        (RAN INTO A SNAG)
+            I gotta create a seperate function that will add 1000 to every possible outcome if you listen to him. Right now I have it so it will add 1000 for each success + click, but now I need to make it so the points will add when you *don't* do anything.
+
+            What might work best is just that when the game over state runs, the points stop adding. Otherwise the points will just normally add each turn.
+
+            Also make sure the points add *specifically* on the light changing after a successful turn
+*/
+
+// Step 5: I think I can start to bring over the code from the normal mode now. Take it slow.
+
 
 
 /*

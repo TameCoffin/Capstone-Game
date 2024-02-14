@@ -22,6 +22,12 @@ body {
     cursor: pointer;
 }
 
+#statusCheck {
+    margin: 5px;
+    padding: 30px;
+    cursor: pointer;
+}
+
 #overlay {
     position: fixed;
     width: 100%;
