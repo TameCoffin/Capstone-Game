@@ -1,5 +1,5 @@
 body {
-    background-color: #B9B9B9;
+    background-color: #ac5858;
     text-align: center;
 }
 
@@ -92,6 +92,12 @@ body {
 
 #ruleTwo {
     margin-left: 50px;
+}
+
+#ruleThree {
+    margin-left: 50px;
+    font-weight: bolder;
+    font-size: 40px;
 }
 
 .points {
