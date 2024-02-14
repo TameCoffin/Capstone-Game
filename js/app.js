@@ -276,6 +276,17 @@ function newHighscore() {
         I finished the tutorial message today, but it might be all I can really muster as of now. I'm eepy.
 */
 
+/*
+    2-14-24
+
+        Uhhhh hard mode was a lot easier to make than I thought it would be. I already have it done.
+
+        Not sure what to do now.
+
+        I suppose now I'll just make an option to change the shape of the light (by herb's request)
+*/
+
+
 
 /*
 

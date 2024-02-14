@@ -118,3 +118,5 @@ body {
 .game-over {
     visibility: hidden;
 }
+
+/* All of the different shapes used for the light come from css-tricks: https://css-tricks.com/the-shapes-of-css/ */
