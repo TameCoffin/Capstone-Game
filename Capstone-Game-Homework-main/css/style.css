@@ -60,6 +60,42 @@ body {
     display: block;
 }
 
+/* .diamond {
+    height: 350px;
+    width: 350px;
+    background-color: rgb(158, 121, 121);
+    border: 3px solid black;
+    margin: auto;
+    mask-image: url(/media/diamond_no_t.png);
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    position: static;
+    bottom: 40%;
+    display: block;
+}
+
+.square {
+    height: 350px;
+    width: 350px;
+    background-color: rgb(158, 121, 121);
+    border: 3px solid black;
+    margin: auto;
+    mask-image: url(/media/square_no_t.png);
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    position: static;
+    bottom: 40%;
+    display: none;
+} */
+
+/* #shapeBorders {
+    margin: auto;
+    position: absolute;
+    bottom: 45%;
+    size: 75%;
+} */
 
 #lightAlert {
     font-size: 30px;
@@ -67,7 +103,7 @@ body {
 
 #errorTimeTest {
     font-size: 150px;
-    visibility: hidden;
+    /* visibility: hidden; */
     position: fixed;
     right: 200px;
     top: 300px;
@@ -135,3 +171,10 @@ body {
 .game-over {
     visibility: hidden;
 }
+
+/* #octagon {
+    mask-image: url(/media/diamond_no_t.png);
+    border: 1px solid black;
+} */
+
+/* All of the different shapes used for the light come from css-tricks: https://css-tricks.com/the-shapes-of-css/ */

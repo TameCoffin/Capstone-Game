@@ -1,4 +1,4 @@
-// Add 100 points each time you listen to Simon. If you hold down space on red and simon didn't tell you to, your points go up, but slower than if it was green
+// another thing we can do for this is if you don't hold down space for 3 or 4 cycles, you'll lose. "Simon got bored"
 
 const countdown = document.getElementById('countdown')
 const overlay = document.getElementById('overlay')
@@ -13,6 +13,7 @@ const checkStatus = document.getElementById('statusCheck')
 const light = document.getElementById("light")
 const simon = document.getElementById("lightAlert")
 const pointsText = document.getElementById('points')
+const changeShape = document.getElementById('shapeSelect')
 
 
 // rgb(38, 222, 96) is green
@@ -41,6 +42,33 @@ let errorSubtract = 1
 let keyState = {};
 let startTime = 3
 
+changeShape.value = "x"
+
+changeShape.addEventListener('change', ()=> {
+    shapeChange();
+})
+
+function shapeChange() {
+    if (changeShape.value === "diamond") {
+        light.style.maskImage = "url(/media/diamond_no_t.png)"
+    } else if (changeShape.value === "octagon") {
+        light.style.maskImage = "url(/media/octagon_no_t.png)"
+    } else if (changeShape.value === "circle") {
+        light.style.maskImage = "url(/media/circle.png)"
+    } else if (changeShape.value === "heart") {
+        light.style.maskImage = "url(/media/heart_no_t.png)"
+    } else if (changeShape.value === "star") {
+        light.style.maskImage = "url(/media/star.png)"
+    } else if (changeShape.value === "oval") {
+        light.style.maskImage = "url(/media/oval.png)"
+    } else if (changeShape.value === "triangle") {
+        light.style.maskImage = "url(/media/triangle.png)"
+    } else if (changeShape.value === "pfffghgahfpf") {
+        light.style.maskImage = "url(/media/pfffghgahfpf.png)"
+    } else if (changeShape.value === "square") {
+        light.style.maskImage = ""
+}}
+
 
 // testButton.addEventListener('click', ()=> {
 //     lightSwitch()
@@ -63,20 +91,15 @@ hideRules.addEventListener('click', ()=> {
     hideRule()
 })
 
-// function lightSwitch() {
-//     if (light.style.backgroundColor === "rgb(158, 121, 121)") {
-//         lightColor = "rgb(210, 51, 51)"
-//         light.style.backgroundColor = lightColor
-//     } else if (light.style.backgroundColor === "rgb(210, 51, 51)") {
-//         lightColor = "rgb(38, 222, 96)"
-//         light.style.backgroundColor = lightColor
-//     } else {
-//         lightColor = "rgb(210, 51, 51)"
-//         light.style.backgroundColor = lightColor
-//     }
-// }
-
-// Step 1 done
+function hideRule() {
+    if (tutorial.style.display === "none"){
+        tutorial.style.display = "block"
+        console.log("rules hidden");
+    } else {
+        tutorial.style.display = "none"
+        console.log("rules displayed");
+    }
+}  
 
 function simonDecider() {
     x = (Math.floor(Math.random() * 2) == 0);
@@ -92,6 +115,16 @@ function simonDecider() {
         simonSaid = false
     }
 }
+
+
+/**
+ * 
+ * x = Math.random() // 0 -> 1  ask herb about this
+ * 
+ * x < 0.5 ? simonSaid = true : simonSaid = false 
+ * simon.innerText = simonSays
+ * 
+ */
 
 // function didSimonSay() {
 //     if (simonSaid === false && light.style.backgroundColor === "rgb(210, 51, 51)") {
@@ -122,21 +155,7 @@ function simonDecider() {
 
 // restart.addEventListener('click', ()=> {
 //     restartGame()
-// })
-
-hideRules.addEventListener('click', ()=> {
-    hideRule()
-})
-
-function hideRule() {
-    if (tutorial.style.display === "none"){
-        tutorial.style.display = "block"
-        console.log("rules hidden");
-    } else {
-        tutorial.style.display = "none"
-        console.log("rules displayed");
-    }
-}   
+// })  
 
 function gameStatusCheck() {
     if (gameStatus === false) {
@@ -172,7 +191,7 @@ window.addEventListener('keyup',(e) => {
 // }
 
 function keyStateCheck() {
-    if (keyState["Space"] && color === "rgb(38, 222, 96)" && simonSaid === true) {
+    if (keyState["Space"] && color === "rgb(38, 222, 96)" && simonSaid) {
         addPoint()
     } else if (keyState["Space"] && color === "rgb(38, 222, 96)" && simonSaid === false && errorTimer >= 1) {
         pointNum--

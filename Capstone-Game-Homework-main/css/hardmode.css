@@ -1,5 +1,5 @@
 body {
-    background-color: #B9B9B9;
+    background-color: #ac5858;
     text-align: center;
 }
 
@@ -22,6 +22,13 @@ body {
     cursor: pointer;
 }
 
+#statusCheck {
+    margin: 5px;
+    padding: 30px;
+    cursor: pointer;
+    display: none;
+}
+
 #overlay {
     position: fixed;
     width: 100%;
@@ -35,31 +42,14 @@ body {
     display: none;
 }
 
-.light-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 50px 835px;
-    padding: auto;
-    background: black;
-    
-}
-
 #light {
-    height: 350px;
-    width: 350px;
+    height: 250px;
+    width: 250px;
     background-color: rgb(158, 121, 121);
     border: 3px solid black;
-    margin: auto;
-    mask-image: "";
-    mask-size: 95%;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    position: static;
-    bottom: 40%;
     display: block;
+    margin: auto;
 }
-
 
 #lightAlert {
     font-size: 30px;
@@ -67,7 +57,7 @@ body {
 
 #errorTimeTest {
     font-size: 150px;
-    visibility: hidden;
+    /* visibility: hidden; */
     position: fixed;
     right: 200px;
     top: 300px;
@@ -92,6 +82,10 @@ body {
     margin-top: 30px;
 }
 
+#extraInfo {
+    font-size: 20px;
+}
+
 #tutorial {
     display: block;
     position: absolute;
@@ -109,6 +103,12 @@ body {
 
 #ruleTwo {
     margin-left: 50px;
+}
+
+#ruleThree {
+    margin-left: 50px;
+    font-weight: bolder;
+    font-size: 40px;
 }
 
 .points {

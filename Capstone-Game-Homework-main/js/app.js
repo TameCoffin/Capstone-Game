@@ -35,7 +35,8 @@ let startTime = 3
 changeShape.value = "x"
 
 changeShape.addEventListener('change', ()=> {
-    shapeChange();
+    shapeChange()
+    console.log(changeShape.value);
 })
 
 function shapeChange() {
@@ -161,8 +162,6 @@ function errorTime() {
         errorTimer -= 1;
     }, 15);
 }
-
-// x = Math.floor(Math.random() * num)
 
 function timeRandomizerRed() {
     if (gameStatus === true) {

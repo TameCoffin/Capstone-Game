@@ -42,13 +42,29 @@ body {
     display: none;
 }
 
+.light-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 835px;
+    padding: auto;
+    background: black;
+    
+}
+
 #light {
-    height: 250px;
-    width: 250px;
+    height: 350px;
+    width: 350px;
     background-color: rgb(158, 121, 121);
     border: 3px solid black;
-    display: block;
     margin: auto;
+    mask-image: "";
+    mask-size: 95%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    position: static;
+    bottom: 40%;
+    display: block;
 }
 
 #lightAlert {
@@ -57,7 +73,7 @@ body {
 
 #errorTimeTest {
     font-size: 150px;
-    /* visibility: hidden; */
+    visibility: hidden;
     position: fixed;
     right: 200px;
     top: 300px;

@@ -11,7 +11,6 @@ const restart = document.getElementById('restartButton')
 const highScore = document.getElementById('highScore')
 const hideRules = document.getElementById('hideRules')
 const tutorial = document.getElementById('tutorial')
-const changeShape = document.getElementById('shapeSelect')
 
 let color = "rgb(210, 51, 51)"
 let pointNum = 0
@@ -31,33 +30,6 @@ let newErrorTimer = 75
 let errorSubtract = 1
 let keyState = {};
 let startTime = 3
-
-changeShape.value = "x"
-
-changeShape.addEventListener('change', ()=> {
-    shapeChange();
-})
-
-function shapeChange() {
-    if (changeShape.value === "diamond") {
-        light.style.maskImage = "url(/media/diamond_no_t.png)"
-    } else if (changeShape.value === "octagon") {
-        light.style.maskImage = "url(/media/octagon_no_t.png)"
-    } else if (changeShape.value === "circle") {
-        light.style.maskImage = "url(/media/circle.png)"
-    } else if (changeShape.value === "heart") {
-        light.style.maskImage = "url(/media/heart_no_t.png)"
-    } else if (changeShape.value === "star") {
-        light.style.maskImage = "url(/media/star.png)"
-    } else if (changeShape.value === "oval") {
-        light.style.maskImage = "url(/media/oval.png)"
-    } else if (changeShape.value === "triangle") {
-        light.style.maskImage = "url(/media/triangle.png)"
-    } else if (changeShape.value === "pfffghgahfpf") {
-        light.style.maskImage = "url(/media/pfffghgahfpf.png)"
-    } else if (changeShape.value === "square") {
-        light.style.maskImage = ""
-}}
 
 testButton.addEventListener('click', ()=> {
     startingTimer()
@@ -161,8 +133,6 @@ function errorTime() {
         errorTimer -= 1;
     }, 15);
 }
-
-// x = Math.floor(Math.random() * num)
 
 function timeRandomizerRed() {
     if (gameStatus === true) {
@@ -305,26 +275,3 @@ function newHighscore() {
 
         I finished the tutorial message today, but it might be all I can really muster as of now. I'm eepy.
 */
-
-/*
-    2-14-24
-
-        Uhhhh hard mode was a lot easier to make than I thought it would be. I already have it done.
-
-        Not sure what to do now.
-
-        I suppose now I'll just make an option to change the shape of the light (by herb's request)
-*/
-
-
-
-/*
-
-    Sources:
-
-    "Game Loop" function was taken from "nnnnn" 
-    link: https://jsfiddle.net/nnnnnn/gedk6/
-
-    "Random Number Generator" function was based on code from "danday74" and "Francisc"
-    https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-*/ 
